@@ -1,0 +1,6 @@
+# Conversation position navigator bundle layer.
+# Applied when a profile lists @ulabe/dsh-conversation-nav in
+# dsh.profile.bundles (dsh plugin --profile <name> add @ulabe/dsh-conversation-nav).
+- insert:
+    - id: conversation-nav
+      name: "@ulabe/dsh-conversation-nav"

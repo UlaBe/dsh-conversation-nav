@@ -1,0 +1,12 @@
+# npm pack 产物
+*.tgz
+
+# 依赖与缓存
+node_modules/
+
+# 日志
+*.log
+npm-debug.log*
+
+# 本地环境（token 等，切勿提交）
+.npmrc
