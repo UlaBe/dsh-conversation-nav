@@ -2,15 +2,12 @@
 
 DeepSeek Harness (DSH) 客户端插件：**对话位置导航**。
 
-在对话界面右侧添加一个悬浮按钮，点击打开抽屉，列出当前会话的**全部用户消息**（自动分页加载完整历史），点击任意条目平滑滚动到对话中的对应位置并高亮。显示效果参考 DeepSeek 网页版对话导航：圆角列表项、聊天气泡图标、单行摘要、相对时间、滑入动画。
+右侧悬浮按钮打开一个**暗黑大纲式**导航抽屉，列出当前会话的**全部用户消息**（打开时自动加载完整历史）。点击任意条目平滑滚动（ease-out）定位到对应消息；**Scroll Spy** 随对话滚动实时高亮当前可视位置对应的导航项（品牌蓝 + 呼吸动效）。实时更新：AI 生成新内容时底部自动追加条目。
 
 ## 目录结构
 
 ```
 dsh-conversation-nav/
-├── install.ps1        # 兜底安装脚本（仅无 dsh CLI 的桌面打包版使用）
-├── uninstall.ps1      # 兜底卸载脚本
-├── README.md
 ├── package.json       # 插件元数据：dsh.bundle（bundle 层）+ dsh.client（浏览器半）
 ├── cordis.patch.yml   # bundle 层（被 dsh plugin add 识别并应用）
 └── lib/
@@ -18,16 +15,16 @@ dsh-conversation-nav/
     └── client.js      # 浏览器侧 bundle（唯一实现，手写无构建）
 ```
 
-## 安装（推荐：`dsh plugin add`）
+## 安装（唯一方式：`dsh plugin`）
 
-插件包是标准的 DSH **bundle**（`package.json` 声明 `dsh.bundle.patch`），可通过官方 CLI 安装。需要 `dsh` CLI（源码版 `pnpm dsh` 或 `npx @deepseek-ai/dsh`；桌面打包版不内置 CLI）。
+插件是标准 DSH **bundle**（`package.json` 声明 `dsh.bundle.patch`），通过官方 CLI 安装：
 
 ```bash
-# 本地 checkout 安装（进入插件目录）
-dsh plugin --profile web add ./@ulabe/dsh-conversation-nav
-
-# 或发布到 npm 后按包名安装
+# 从 npm 安装（正式发布）
 dsh plugin --profile web add @ulabe/dsh-conversation-nav
+
+# 或本地 checkout 安装（开发调试，在插件目录内）
+dsh plugin --profile web add .
 ```
 
 `dsh plugin add` 会把包加进 profile 的 `dsh.profile.bundles`（自动 reconcile），随后加载本包的 `cordis.patch.yml` 层激活插件条目，并通过 `dsh.client` 声明向浏览器服务 UI bundle。**装完重启 dsh 生效**。
@@ -37,17 +34,6 @@ dsh plugin --profile web add @ulabe/dsh-conversation-nav
 ```bash
 dsh plugin --profile web remove @ulabe/dsh-conversation-nav
 ```
-
-## 兜底安装（无 dsh CLI 的桌面打包版）
-
-```powershell
-cd D:\Plugins\dsh-conversation-nav
-.\install.ps1        # 复制插件包到 ~/.dsh/profiles/node_modules + 写 cordis.patch.yml 条目
-.\uninstall.ps1      # 卸载
-# 完全退出并重启 DeepSeek Harness
-```
-
-
 
 ## 兼容性与已知限制
 
@@ -62,6 +48,6 @@ cd D:\Plugins\dsh-conversation-nav
 |---|---|
 | 改了代码/样式但重启后没变化 | 完全退出 Harness（含托盘）再启动；或 Ctrl+Shift+R 强刷 |
 | `dsh plugin add` 后按钮没出现 | 确认包声明 `dsh.bundle` 且已进入 profile bundles；`dsh --profile web --dump-config` 应看到插件层；重启 |
-| 桌面打包版没有 `dsh` 命令 | 用兜底 `install.ps1`，或改用源码版/`npx @deepseek-ai/dsh` |
+| 需要 `dsh` CLI | `npm install -g @deepseek-ai/dsh` 或源码版 `pnpm dsh`；桌面打包版不内置 CLI |
 | DSH 升级后按钮消失 | 检查控制台错误；确认 `dsh-client-runtime` API 未变，必要时适配 `lib/client.js` |
 | 想要不跟随当前会话/调整样式 | 编辑 `lib/client.js`（样式在文件顶部 css 数组，逻辑在 `makeNavPanel`），重装后重启 |
