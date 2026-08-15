@@ -47,14 +47,7 @@ cd D:\Plugins\dsh-conversation-nav
 # 完全退出并重启 DeepSeek Harness
 ```
 
-## 发布到 npm（可选）
 
-```bash
-npm login
-npm publish --access public
-```
-
-发布后任意机器可直接 `dsh plugin --profile web add @ulabe/dsh-conversation-nav`。包已带 `keywords: ["dsh-plugin"]`，会被 dsh-store / dsh-market 等社区商店收录。
 
 ## 兼容性与已知限制
 
