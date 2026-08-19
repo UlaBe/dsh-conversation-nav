@@ -1,30 +1,20 @@
 # @ulabe/dsh-conversation-nav
 
-DeepSeek Harness (DSH) 客户端插件：**对话位置导航**。
+DeepSeek Harness (DSH) 插件：**对话位置导航**。
 
 右侧悬浮按钮打开一个**暗黑大纲式**导航抽屉，列出当前会话的**全部用户消息**（打开时自动加载完整历史）。点击任意条目平滑滚动（ease-out）定位到对应消息；**Scroll Spy** 随对话滚动实时高亮当前可视位置对应的导航项（品牌蓝 + 呼吸动效）。实时更新：AI 生成新内容时底部自动追加条目。
+<img width="2124" height="1277" alt="image" src="https://github.com/user-attachments/assets/1901e9b7-636c-4569-a8ba-b5112e662028" />
 
-## 目录结构
+<img width="2099" height="1312" alt="image" src="https://github.com/user-attachments/assets/b5e39b44-4243-4f47-a1ab-5fe844990636" />
 
-```
-dsh-conversation-nav/
-├── package.json       # 插件元数据：dsh.bundle（bundle 层）+ dsh.client（浏览器半）
-├── cordis.patch.yml   # bundle 层（被 dsh plugin add 识别并应用）
-└── lib/
-    ├── index.js       # Node 侧入口（no-op apply）
-    └── client.js      # 浏览器侧 bundle（唯一实现，手写无构建）
-```
 
-## 安装（唯一方式：`dsh plugin`）
 
-插件是标准 DSH **bundle**（`package.json` 声明 `dsh.bundle.patch`），通过官方 CLI 安装：
+
+## 安装
 
 ```bash
 # 从 npm 安装（正式发布）
 dsh plugin --profile web add @ulabe/dsh-conversation-nav
-
-# 或本地 checkout 安装（开发调试，在插件目录内）
-dsh plugin --profile web add .
 ```
 
 `dsh plugin add` 会把包加进 profile 的 `dsh.profile.bundles`（自动 reconcile），随后加载本包的 `cordis.patch.yml` 层激活插件条目，并通过 `dsh.client` 声明向浏览器服务 UI bundle。**装完重启 dsh 生效**。
