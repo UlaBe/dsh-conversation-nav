@@ -1,7 +1,7 @@
 {
   "name": "@ulabe/dsh-conversation-nav",
-  "description": "Conversation position navigator: a right-edge floating button that opens a drawer listing every user message, click to jump (DeepSeek web-style).",
-  "version": "0.1.0",
+  "description": "Conversation position navigator (flat list): a right-edge tick rail with a hover panel listing every user message, click to jump (DeepSeek web-style).",
+  "version": "0.2.0",
   "keywords": [
     "dsh",
     "dsh-plugin",
